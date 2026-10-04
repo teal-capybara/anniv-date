@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy 3rd Anniversary 💗</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Flat decorative shapes + floating hearts/sparkles (filled by script.js) -->
+<div id="deco" aria-hidden="true"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>
+<div id="hearts" aria-hidden="true"></div>
+<div id="confetti" aria-hidden="true"></div>
+
+<main>
+  <!-- 1. OPENING: a closed envelope that opens when you tap the button -->
+  <section class="screen active" id="s-open">
+    <div class="card">
+      <span class="chip">For <span data-name="gf"></span></span>
+      <div class="envelope" aria-hidden="true">
+        <svg viewBox="0 0 200 150">
+          <path class="env-back" d="M14 66 L100 14 L186 66 Z"/>
+          <g class="env-sheet-g">
+            <rect class="env-sheet" x="34" y="66" width="132" height="70" rx="8"/>
+            <path class="env-heart" transform="translate(94 70) scale(.5)" d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z"/>
+            <path class="env-line" d="M62 92h76"/>
+          </g>
+          <rect class="env-body" x="14" y="60" width="172" height="84" rx="12"/>
+          <path class="env-fold" d="M14 144 L84 98 M186 144 L116 98"/>
+          <g class="env-front">
+            <path class="env-flap" d="M14 60 H186 L100 118 Z"/>
+            <circle class="env-seal" cx="100" cy="106" r="12"/>
+            <path class="env-seal-heart" transform="translate(95.8 101.5) scale(.35)" d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z"/>
+          </g>
+        </svg>
+      </div>
+      <h1>Hey, <span data-name="gf"></span>...</h1>
+      <p class="lead">I have a very important question for you.</p>
+      <button class="btn primary" id="openBtn">Open this 💌</button>
+    </div>
+  </section>
+
+  <!-- 2. THE QUESTION (NO never moves; YES grows, NO shrinks) -->
+  <section class="screen" id="s-invite">
+    <div class="card">
+      <span class="chip">A question for you</span>
+      <h1>Will you go on a date with <span data-name="sister"></span> on <span data-date></span>?</h1>
+      <p id="noMsg" class="bubble" aria-live="polite">&nbsp;</p>
+      <div class="choices">
+        <button id="yesBtn" class="btn primary">YES 💗</button>
+        <button id="noBtn" class="btn ghost">NO 😭</button>
+      </div>
+    </div>
+    <button id="resetBtn" class="link">↺ start over</button>
+  </section>
+
+  <!-- 3. YES CELEBRATION -->
+  <section class="screen" id="s-yes">
+    <div class="card">
+      <div class="big-icon" data-icon="heart"></div>
+      <h1>SHE SAID YES! 💗</h1>
+      <h2>IT'S A DATE.</h2>
+      <button class="btn primary" id="planBtn">Okay, now let's plan it →</button>
+    </div>
+  </section>
+
+  <!-- 4. PLANNER (one question per screen, filled in by script.js) -->
+  <section class="screen" id="s-plan">
+    <div class="card">
+      <div class="plan-head">
+        <span class="chip">Date planning</span>
+        <span class="count" id="progress"></span>
+      </div>
+      <div class="segs" id="segs" aria-hidden="true"></div>
+      <div id="qWrap">
+        <h2 id="qTitle"></h2>
+        <p class="hint" id="qHint"></p>
+        <div class="grid" id="options"></div>
+      </div>
+      <div class="nav">
+        <button class="btn ghost small" id="backBtn">← Back</button>
+        <button class="btn primary small" id="nextBtn" disabled>Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. DATE CARD (ticket) -->
+  <section class="screen" id="s-card">
+    <div class="card ticket">
+      <div class="stamp" aria-hidden="true"><span>OFFICIAL</span><b>DATE</b><span>CONFIRMED</span></div>
+      <span class="chip">✦ Our 3rd anniversary date ✦</span>
+      <p class="date" data-date></p>
+      <div class="perf"></div>
+      <div class="tiles" id="tiles"></div>
+      <div class="perf"></div>
+      <button class="btn primary" data-go="s-send">One more thing... 💌</button>
+    </div>
+  </section>
+
+  <!-- 8. SISTER'S MESSAGE: the very last screen, shown only after the email is sent (text lives in CONFIG.finalMessage) -->
+  <section class="screen" id="s-message">
+    <div class="card letter">
+      <div class="seal" data-icon="heart"></div>
+      <span class="chip">One last thing... 💌</span>
+      <div class="sent"><b>DATE CONFIRMED 💗</b><span>Your anniversary receipt has been sent.</span></div>
+      <h2>For <span data-name="gf"></span></h2>
+      <div id="letterText"></div>
+      <p class="sign">— <span data-name="sister"></span></p>
+    </div>
+  </section>
+
+  <!-- 7. NOTE + RECEIPT FORM (message optional, email required) -->
+  <section class="screen" id="s-send">
+    <div class="card">
+      <span class="chip">Optional note</span>
+      <h2>A little note for <span data-name="sister"></span></h2>
+      <p class="hint">If you want to leave her a little message, write it here. You can also leave it blank.</p>
+      <label for="msg">Your message</label>
+      <textarea id="msg" rows="5" placeholder="Dear..."></textarea>
+      <label for="guestName">Your name</label>
+      <input id="guestName" type="text" autocomplete="name" placeholder="Your name">
+      <p class="hint small">So <span data-name="sister"></span> knows who sent the receipt. 💗</p>
+      <p id="formError" class="error" role="alert" hidden></p>
+      <button class="btn primary" id="sendBtn">Send my anniversary receipt 💌</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- EmailJS browser SDK (needs internet only for the receipt step) -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
