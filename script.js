@@ -17,9 +17,9 @@ const CONFIG = {
   // EmailJS values.
   // it is set in the EmailJS template's "To Email" field.
   emailjs: {
-    serviceId: "...",
-    templateId: "...",
-    publicKey: "..."
+    serviceId: "service_oqil0eq",
+    templateId: "template_bgzjpt4",
+    publicKey: "ML7s7cpQIOeVKnw4M"
   }
 };
 
