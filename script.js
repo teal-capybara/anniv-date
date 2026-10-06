@@ -1,23 +1,25 @@
 /* =====================================================
-   1. CONFIG: the things you'll want to edit
+   1. CONFIG: to edit...
    ===================================================== */
 const CONFIG = {
   sisterName: "Me",
   gfName: "Baba",
   dateText: "October 13, 2026",
 
-  // Final message from your sister. One string per paragraph.
+  // Final message. One string per paragraph.
   finalMessage: [
-    "[Replace with mess kay te jana]",
-    "[2nd parag if there is]"
+    "10/5/26<br>12:08am",
+    "Hello, my love",
+    "Happy 3rd Anniversary, love. Thank you for being my crying shoulder at all times, for making me feel special, and for loving me unconditionally. Sorry for the mistakes I've done, and thank you for forgiving and accepting me always. I love you so much, mahal. I hope our love last forever, because I'm at my happiest with you. Happy 3rd Anniversary, baba. I love you till the clock stops!",
+    "— Lai"
   ],
 
-  // EmailJS values (see the setup guide). The destination email is NOT here:
+  // EmailJS values.
   // it is set in the EmailJS template's "To Email" field.
   emailjs: {
-    serviceId: "service_jtmv7rh",
-    templateId: "template_95s6h44",
-    publicKey: "oqTHhl_A_7qDaruEM"
+    serviceId: "...",
+    templateId: "...",
+    publicKey: "..."
   }
 };
 
@@ -41,7 +43,7 @@ const NO_MESSAGES = [
 const QUESTIONS = [
   { id: "dateType", title: "What kind of date do you want?", hint: "Pick the adventure.", emailLabel: "DATE TYPE", emoji: "🍽️", options: [
     { id: "food", label: "Food trip", icon: "food" },
-    { id: "movie", label: "Movie date", icon: "movie" },
+    { id: "rooftop", label: "Rooftop date", icon: "rooftop" },
     { id: "picnic", label: "Picnic date", icon: "picnic" },
     { id: "explore", label: "Sightseeing / exploring", icon: "city" },
     { id: "surprise", label: "Surprise me", icon: "dice" } ] },
@@ -75,7 +77,7 @@ const ICONS = {
   mail: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 8l9 6 9-6"/>',
   heart: '<path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z"/>',
   food: '<path d="M3 2v7a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6a2 2 0 0 0 2 2h3zm0 0v7"/>',
-  movie: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 3v18M17 3v18M3 8h4M17 8h4M3 12h18M3 16h4M17 16h4"/>',
+  rooftop: '<path d="M3 21h18M5 21V10h14v11M4.5 8h15M7 8v2M12 8v2M17 8v2M12 2.5v3M10.5 4h3M9 14h.01M15 14h.01M9 18h.01M15 18h.01"/>',
   picnic: '<path d="M3 11h18l-2 9H5zM7 11a5 5 0 0 1 10 0M9 15v2M12 15v2M15 15v2"/>',
   city: '<path d="M3 21h18M5 21V9l5-3v15M10 21V4l9 5v12M13 12h3M13 16h3"/>',
   dice: '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/>',
@@ -149,7 +151,7 @@ function makeHearts() {
 const root = document.documentElement;
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Opening: the envelope opens, then we move on
+// Opening: the envelope opens
 $("openBtn").addEventListener("click", () => {
   $("openBtn").disabled = true;
   $("s-open").classList.add("opened"); // CSS animates the envelope
@@ -307,7 +309,7 @@ $("sendBtn").addEventListener("click", async () => {
     }, { publicKey: c.publicKey });
     if (res.status !== 200) throw new Error("Unexpected status " + res.status);
     state.hasSent = true; // success only after EmailJS confirms; the button stays disabled
-    show("s-message"); // sister's letter is the final screen
+    show("s-message"); // final message is the last screen
     celebrate();
   } catch (err) {
     console.error(err);
